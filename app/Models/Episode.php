@@ -48,11 +48,26 @@ class Episode extends Model
         return asset('storage/episodes/' . $this->show_id . '/' . $this->season . '/' . $this->episode . '.jpg');
     }
 
-    public function url()
+    public function getThumbnailPathAttribute()
+    {
+        return storage_path('app/public/episodes/' . $this->show_id . '/' . $this->season . '/' . $this->episode . '.jpg');
+    }
+
+    public function getMediaNameAttribute()
     {
         $name = Helper::clearName($this->torrent->title) . ' S' . str_pad($this->season, 2, '0', STR_PAD_LEFT) . 'E' . str_pad($this->episode, 2, '0', STR_PAD_LEFT) . '.mp4';
         $name = preg_replace('/[^0-9^a-z^A-Z^_^.]/', '.', $name);
-        $name = preg_replace('/\.+/', '.', $name);
+        return preg_replace('/\.+/', '.', $name);
+    }
+
+    public function getMediaPathAttribute()
+    {
+        return env('MEDIA_PATH') . '/' . Helper::clearName($this->torrent->title) . '/' . 'Season ' . $this->season . '/' . $this->mediaName;
+    }
+
+    public function url()
+    {
+        $name = $this->mediaName;
         $path = '/tv-series/' . Helper::clearName($this->torrent->title) . '/' . 'Season ' . $this->season . '/' . $name;
         $expireTime = Carbon::now()->addHours(6)->getTimestamp();
         $hash = md5($expireTime . $path . ' ' . env('SECURE_SALT'), true);
