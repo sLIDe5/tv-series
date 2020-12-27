@@ -40,4 +40,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function episodes()
+    {
+        return Episode::select('episodes.*')->join('user_shows', 'episodes.show_id', '=', 'user_shows.show_id')->where('user_shows.user_id', $this->id);
+    }
+
+    public function shows()
+    {
+        return $this->belongsToMany(Show::class, 'user_shows');
+    }
 }
