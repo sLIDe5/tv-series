@@ -9,7 +9,9 @@ class Torrent extends Model
 
     const STATUS_PENDING = 0;
     const STATUS_DOWNLOADING = 1;
-    const STATUS_DOWNLOADED = 2;
+    const STATUS_PROCESSED = 2;
+    const STATUS_SKIPPED = 3;
+    const STATUS_PROCESSING = 4;
 
     protected $fillable = [
         'title',

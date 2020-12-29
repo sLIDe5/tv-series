@@ -25,6 +25,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('tv-series:fix-missing-images')->weekly();
+        $schedule->command('tv-series:get-torrents')->everyTenMinutes()->name('Get torrents')->withoutOverlapping();
+        $schedule->command('tv-series:download-torrents')->everyTenMinutes()->name('Download torrents')->withoutOverlapping();
+        $schedule->command('tv-series:process-torrents')->everyTenMinutes()->name('Process torrents')->withoutOverlapping();
     }
 
     /**
