@@ -84,7 +84,7 @@ class ProcessTorrents extends Command
                     continue;
                 }
             } catch (\Exception $e) {
-                Log::error('Failed to get episode data for ' . $show->title . ' Season ' . $torrent->season . ' Episode ' . $torrent->episode . ': ' . $e->getMessage());
+                Log::error('Failed to get episode data for ' . $torrent->title . ' Season ' . $torrent->season . ' Episode ' . $torrent->episode . ': ' . $e->getMessage());
                 continue;
             }
 
